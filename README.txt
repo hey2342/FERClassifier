@@ -7,6 +7,7 @@
 
 テストだけなら
 1. ListImages/Test_sample_youtube.txt と同じようにリストを作成
+    教師データは適当で良いです
 2. <path/to/dataset>/data/顔画像
                     /np/ランドマーク
                     /leye/左目画像
