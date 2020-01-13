@@ -4,9 +4,9 @@ import os
 
 def data_similarity(person_id = 'F0001', in_dir = 'prediction/'):
     print(person_id)
-    train_dir = 'encoder_'+person_id+'/neutral/'
+    train_dir = 'classifier_'+person_id+'/neutral/'
     trainls = os.listdir(train_dir)
-    test_dir = 'encoder_'+person_id+'/feature_sample_youtube/'
+    test_dir = 'classifier_'+person_id+'/feature_sample_youtube/'
     testls = os.listdir(test_dir)
 
     test_label = np.load('/root/classifier/sample_youtube/test_label.npy')

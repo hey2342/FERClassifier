@@ -3,7 +3,6 @@ import numpy as np
 #from sklearn.cluster import KMeans
 from sklearn.svm import OneClassSVM
 
-
 th = float(sys.argv[1])
 out_dir = sys.argv[2]
 if not os.path.exists(out_dir):
@@ -17,7 +16,7 @@ for s in ['F', 'M']:
     for i in range(1, 21):
         person_id = s+str(i).zfill(4)
 
-        feat_dir = './encoder_'+person_id+'/feature_sample_youtube/'
+        feat_dir = './classifier_'+person_id+'/feature_sample_youtube/'
         print('load : '+feat_dir)
         featls = os.listdir(feat_dir)
         featls.sort()
