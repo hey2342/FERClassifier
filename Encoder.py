@@ -134,10 +134,6 @@ def train(in_dir, class_dir, fine_tuning):
             out, _ = model(lmark, reye, leye, mouth)
             out = out.view(out.size(0))
 
-            #print('output')
-            #print(out)
-            #print('label')
-            #print(label)
             loss = criterion(out, label)
         
             optimizer.zero_grad()
@@ -198,7 +194,6 @@ def test(in_dir, class_dir, feat_dir):
  
     f = open(class_dir + 'result.txt', 'w')
     for i in range(len(label)):
-        #print(str(label[i]) + ' ' + str(out[i]))
         f.write(str(label[i]) + ' ' + str(out[i]) + '\n')
         np.save(feat_dir + str(int(label[i])) + '_' + str(i).zfill(4), feat[i])
     f.close()
@@ -213,11 +208,11 @@ if __name__ == '__main__':
     class_dir = args.classifier_dir
     feat_dir = args.feature
 
-    print(mode)
-    print(in_dir)
-    print(finetuning)
-    print(class_dir)
-    print(feat_dir)
+    print('mode       = ', mode)
+    print('input      = ', in_dir)
+    print('finetuning = ', finetuning)
+    print('output     = ', class_dir)
+    print('feature    = ', feat_dir)
 
     if mode == 'train':
         if finetuning:

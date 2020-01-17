@@ -1,6 +1,5 @@
 import os, sys
 import numpy as np
-#from sklearn.cluster import KMeans
 from sklearn.svm import OneClassSVM
 
 th = float(sys.argv[1])
@@ -9,7 +8,7 @@ if not os.path.exists(out_dir):
     os.mkdir(out_dir)
 
 labels = np.load('/root/classifier/sample_youtube/test_label.npy')
-#labels = np.load('./sample_youtube/sample_youtube_label.npy')
+#labels = np.load('./root/classifier/sample_youtube/sample_youtube_label.npy')
 
 
 for s in ['F', 'M']:
@@ -33,6 +32,6 @@ for s in ['F', 'M']:
         preds = (preds+1)*0.5
         #outlier=0, inlier=1
         preds = np.abs(preds-1)
-        #outlier=1, inlier=0
+        #outlier=1(exp), inlier=0(ne)
 
         np.save(out_dir + person_id, preds)

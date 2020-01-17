@@ -42,23 +42,18 @@ for i in ne_ind:
     result.append(labells[i])
 
 result_sum = np.sum(result, 0)
-result = []
+pred = []
 th = len(ne_ind)/2
-ne = 0
-exp = 0
 for i in range(len(result_sum)):
     if result_sum[i] < th:
         print(str(i).zfill(3), ' : 0')
-        ne+=1
-        result.append(0)
+        pred.append(0)
     elif result_sum[i] > th:
         print(str(i).zfill(3), ' : 1')
-        exp+=1
-        result.append(1)
+        pred.append(1)
     else:
         print(str(i).zfill(3), ' : 0=')
-        exp+=1
-        result.append(1)
+        pred.append(1)
 
 cap = cv2.VideoCapture('/root/classifier/sample_youtube/sample_youtube.mp4')
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -72,7 +67,7 @@ while cap.isOpened():
     ret, frame = cap.read()
     if ret == True:
         if label[j] >= 0:
-            if result[i]>0:
+            if pred[i]>0:
                 c = (0, 0, 255)
                 txt = 'EXP'
             else:
@@ -87,16 +82,30 @@ while cap.isOpened():
         break
 
 cap.release()
-        
-one_teach = np.count_nonzero(label>0)
-zero_teach = np.count_nonzero(label==0)
 
-one_pred = exp / one_teach
-zero_pred = ne / zero_teach
+label = [x for x in label if x>0]
 
-ne_result = 'neutral    : ' + str(ne) + ' / ' + str(zero_teach) + ' = ' + str(zero_pred)[:5]
-exp_result = 'expression : ' + str(exp) + ' / ' + str(one_teach) + ' = ' + str(one_pred)[:5]
+ind_zero_label = [i for i, x in enumerate(label) if x == 0]
+ind_zero_pred = [i for i, x in enumerate(pred) if x == 0]
+zero_tp = list(set(ind_zero_label) & set(ind_zero_pred))
+
+ind_one_label = [i for i, x in enumerate(label) if x == 1]
+ind_one_pred = [i for i, x in enumerate(pred) if x == 0]
+one_tp = list(set(ind_one_label) & set(ind_one_pred))
+
+zero_precision = len(zero_tp) / len(ind_zero_pred)
+one_precision = len(one_tp) / len(ind_one_pred)
+zero_recall = len(zero_tp) / len(ind_zero_label)
+one_recall =  len(one_tp) / len(ind_one_label)
 
 f = open(out_dir + 'result.txt', 'w')
-f.write(ne_result + '\n')
-f.write(exp_result)
+f.write('selected encoder = ', ne_ind)
+
+f.write('neutral precision    = ' + str(zero_precision)[:5] + ‘\n’)
+f.write('expression precision = ' + str(one_precision)[:5] + ‘\n’ + ‘\n’)
+
+f.write('neutral recall    = ' + str(zero_recall)[:5] + ‘\n’)
+f.write('expression recall = ' + str(one_recall)[:5])
+f.close()
+np.save(out_dir + 'result', np.array(pred))
+
