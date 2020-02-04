@@ -49,8 +49,8 @@
     
     
 モデルを追加したい場合
-[MUG dataset](https://mug.ee.auth.gr/fed/)
-[BU3DFE database](http://www.cs.binghamton.edu/~lijun/Research/3DFE/3DFE_Analysis.html)
+MUG dataset(https://mug.ee.auth.gr/fed/)
+BU3DFE database(http://www.cs.binghamton.edu/~lijun/Research/3DFE/3DFE_Analysis.html)
 を使いました。
 BU3DFEのF0001〜F0020とM0001〜M0020の人物については学習済みです。
 それ以外の人を使いたい場合だけ、読んでください。
