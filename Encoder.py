@@ -195,7 +195,7 @@ def test(in_dir, class_dir, feat_dir):
     f = open(class_dir + 'result.txt', 'w')
     for i in range(len(label)):
         f.write(str(label[i]) + ' ' + str(out[i]) + '\n')
-        np.save(feat_dir + str(int(label[i])) + '_' + str(i).zfill(4), feat[i])
+        np.save(feat_dir+str(i).zfill(4)+'_'+str(int(label[i])), feat[i])
     f.close()
     evaluation(class_dir)
 
